@@ -19,7 +19,7 @@ namespace fncGetRatings
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "GetRating/{ratingId}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "icecreamratings",
-                collectionName: "Ratings",
+                collectionName: "ratings",
                 ConnectionStringSetting = "cosmosdbconnection",
                  SqlQuery ="SELECT * FROM c WHERE c.id={ratingId} ORDER BY c._ts DESC")] IEnumerable<Rating> ratingItems,
             ILogger log,
