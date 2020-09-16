@@ -28,7 +28,7 @@ namespace fncGetRatings
             log.LogInformation(string.Format("dbConn={0}, databaseId={1}, containerId={2}, userId={3}", dbConn, databaseId, containerId, userId));
 
             // Param validation
-            if (string.IsNullOrEmpty(userId)) return new BadRequestObjectResult("A user Id was not provided"); // Bad request (400)
+            if (string.IsNullOrEmpty(userId)) return new BadRequestObjectResult("No user Id provided"); // Bad request (400)
 
             // Connect to DB and execute query
             List<object> items = new List<object>();
