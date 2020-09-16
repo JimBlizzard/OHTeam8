@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 
+
 namespace CreateRating
 {
     public static class CreateRating
@@ -20,7 +21,7 @@ namespace CreateRating
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             [CosmosDB(
                databaseName: "icecreamratings",
-                collectionName: "Ratings",
+                collectionName: "ratings",
                 ConnectionStringSetting = "CosmosDBConnection")] IAsyncCollector<ratingModel> ratingDoc,
             ILogger log)
         {
@@ -92,7 +93,7 @@ namespace CreateRating
             // get current time
             string currentDateTime = DateTime.UtcNow.ToString();
 
-            /*ratingModel newRating = new ratingModel();
+            ratingModel newRating = new ratingModel();
 
            
             // Create JSON object
@@ -103,15 +104,13 @@ namespace CreateRating
             newRating.locationName = locationName;
             newRating.rating = rating;
             newRating.userNotes = userNotes;
-            */
 
             // send data to cosmosdb
-            ratingDoc = new { id = idStr, userId = userId, productId = productId, timeStamp = currentDateTime, locationName = locationName, rating = rating, userNotes = userNotes };
+            await ratingDoc.AddAsync(newRating);
 
-            //string newRatingStr = newRating.ToString();
             //Return json object
-            string responseMessage = $"{newRatingStr}";
-            return new OkObjectResult(responseMessage);
+            string jsonString = JsonConvert.SerializeObject(newRating);
+            return new OkObjectResult($"{jsonString}");
         }
     }
 }
