@@ -11,11 +11,11 @@ using Microsoft.Azure.WebJobs.Extensions.CosmosDB;
 using System.Collections.Generic;
 
 
-namespace GetRatingsFNC
+namespace fncGetRatings
 {
     public static class DocByIdFromQueryString
     {
-        [FunctionName("GetRatingsFNC")]
+        [FunctionName("GetRating")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "GetRating/{ratingId}")]
                 HttpRequest req,
