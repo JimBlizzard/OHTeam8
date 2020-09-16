@@ -10,15 +10,13 @@ using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Extensions.CosmosDB;
 using System.Collections.Generic;
 
-
 namespace fncGetRatings
 {
     public static class DocByIdFromQueryString
     {
         [FunctionName("GetRating")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "GetRating/{ratingId}")]
-                HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "GetRating/{ratingId}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "icecreamratings",
                 collectionName: "Ratings",
