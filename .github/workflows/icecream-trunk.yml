@@ -11,8 +11,10 @@ on:
     branches: [ trunk ]
 
 env:
-  AZURE_FUNCTIONAPP_NAME: fncGetRatings  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './fncGetRatings'    # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_NAME_GET: 'fncGetRatings'  # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH_GET: './fncGetRatings'    # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_NAME_CREATE: 'fncCreateRating'  # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH_CREATE: './CreateRating/Creatrating'    # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'              # set this to the dotnet version to use
 
 jobs:
@@ -32,17 +34,39 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: 'Resolve Project Dependencies Using Dotnet'
+    ##
+    # "Get" functions
+    ##
+    - name: 'Resolve Project Dependencies Using Dotnet - Get functions'
       shell: pwsh
       run: |
-        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH_GET }}'
         dotnet build --configuration Release --output ./output
         popd
         
-    - name: 'Run Azure Functions Action'
+    - name: 'Run Azure Functions Action - Get functions'
       uses: Azure/functions-action@v1
       id: fa
       with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME_GET }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH_GET }}/output'
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+
+    ##
+    # "Create" functions
+    ##
+    - name: 'Resolve Project Dependencies Using Dotnet - Create functions'
+      shell: pwsh
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH_CREATE }}'
+        dotnet build --configuration Release --output ./output
+        popd
+        
+    - name: 'Run Azure Functions Action - Create functions'
+      uses: Azure/functions-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME_CREATE }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH_CREATE }}/output'
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+
