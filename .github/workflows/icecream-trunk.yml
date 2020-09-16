@@ -14,7 +14,7 @@ env:
   AZURE_FUNCTIONAPP_NAME_GET: 'fncGetRatings'  # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH_GET: './fncGetRatings'    # set this to the path to your web app project, defaults to the repository root
   AZURE_FUNCTIONAPP_NAME_CREATE: 'fncCreateRating'  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH_CREATE: './CreateRating/Creatrating'    # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH_CREATE: './CreateRating/Createrating'    # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'              # set this to the dotnet version to use
 
 jobs:
