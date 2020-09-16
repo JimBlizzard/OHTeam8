@@ -11,8 +11,9 @@ using Newtonsoft.Json;
 namespace fncGetRatings
 {
     public static class CreateRating
-    {
 
+    {
+        [FunctionName("CreateRating")]
         public static void Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
         [CosmosDB(
